@@ -6,27 +6,26 @@ const {
 } = require("../controllers/driversControllers");
 
 const getDriverHandler = async (req, res) => {
-
   try {
-      const response = await getAllDrivers();
-      res.status(200).json(response);
+    const response = await getAllDrivers();
+    res.status(200).json(response);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 };
-const getDriverByNameHandler = async (req,res)=>{
-const {name} = req.query
-try {
-  if(name){
-    const driverByName = await getDriverByName(name)
-    res.status(200).json(driverByName)
-  } else {
-    res.status(400).json(`Conductor con el nombre ${name}, no existe.`)
+const getDriverByNameHandler = async (req, res) => {
+  const { name } = req.query;
+  try {
+    if (name) {
+      const driverByName = await getDriverByName(name);
+      res.status(200).json(driverByName);
+    } else {
+      res.status(400).json(`Conductor con el nombre ${name}, no existe.`);
+    }
+  } catch (error) {
+    res.status(400).json({ error: error.message });
   }
-} catch (error) {
-  res.status(400).json({ error: error.message });
-}
-}
+};
 
 const getDriverById = async (req, res) => {
   const { id } = req.params;
@@ -60,5 +59,5 @@ module.exports = {
   getDriverHandler,
   getDriverById,
   createDriver,
-  getDriverByNameHandler
+  getDriverByNameHandler,
 };

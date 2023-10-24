@@ -33,7 +33,6 @@ const getDriverByName = async (name) => {
   const driversApi = await axios.get(`${URL}`);
   const driverApiInfo = infoCleaner(driversApi.data);
 
-
   const filteredApiDrivers = driverApiInfo.filter((driver) => {
     return (
       driver.name.toLowerCase().includes(nameToLowerCase) ||
@@ -47,9 +46,8 @@ const getDriverByName = async (name) => {
     throw new Error("Driver not found");
   }
 
-  return combinedDrivers.slice(0, 15); 
+  return combinedDrivers.slice(0, 15);
 };
-
 
 const getAllDrivers = async () => {
   const driversDB = await Driver.findAll();
