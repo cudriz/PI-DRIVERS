@@ -1,0 +1,25 @@
+.navbar_cont {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgb(20, 185, 122);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+}
+
+.navbar_img_cont img {
+    width: 7rem;
+    height: auto;
+}
+
+.navbar_link_cont {
+    display: flex;
+    justify-content: space-between;
+    width: 15rem;
+    margin: 1rem;
+}
+
+  

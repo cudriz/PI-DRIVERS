@@ -39,7 +39,7 @@ const getDriverById = async (req, res) => {
 };
 
 const createDriver = async (req, res) => {
-  const { name, surname, description, image, nationality, dob } = req.body;
+  const { name, surname, description, image, nationality, dob,teams  } = req.body;
   try {
     const newDriver = await createDriverDB(
       name,
@@ -47,7 +47,9 @@ const createDriver = async (req, res) => {
       description,
       image,
       nationality,
-      dob
+      dob,
+      teams
+      
     );
     res.status(200).json(newDriver);
   } catch (error) {

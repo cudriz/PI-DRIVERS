@@ -35,11 +35,11 @@ const getTeamsDriver = async () => {
 
     if (response.status === 200) {
       const teams = response.data
-        .filter((driver) => driver.teams) // Filtrar los conductores que tienen la propiedad 'teams'
+        .filter((driver) => driver.teams)
         .map((driver) => driver.teams.split(", "))
         .flat();
 
-      // Remove duplicates from the array of teams
+      // Remove duplicates
       const uniqueTeams = [...new Set(teams)];
 
       await saveTeams(uniqueTeams);
