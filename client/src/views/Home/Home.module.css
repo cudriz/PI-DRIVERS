@@ -1,0 +1,44 @@
+/* Home.module.css */
+.container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .filtersContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* Centra los elementos horizontalmente */
+  }
+  
+  .filters {
+    margin: 10px;
+  }
+  
+  .pagination {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centra horizontalmente */
+    text-align: center; /* Centra verticalmente */
+  }
+  
+  .pagination h4 {
+    margin: 0; /* Elimina el margen predeterminado para que esté centrado verticalmente */
+  }
+  
+  .pagination button {
+    margin: 5px; /* Espacio entre los botones */
+    padding: 5px 10px; /* Espacio dentro de los botones */
+    background-color: #007bff; /* Color de fondo azul, puedes personalizarlo */
+    color: #fff; /* Color del texto en los botones */
+    border: none; /* Sin bordes */
+    cursor: pointer;
+  }
+  
+  .pagination button:hover {
+    background-color: #0056b3; /* Cambio de color al pasar el ratón */
+  }
+
+  .pagination .page {
+    display: inline-block; /* Permite que los botones estén en línea */
+    margin-right: 10px; /* Espacio entre los botones */
+  }

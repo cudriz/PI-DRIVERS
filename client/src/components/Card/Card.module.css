@@ -1,0 +1,29 @@
+.card {
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  text-align: center;
+  background-color: #fff;
+  margin: 10px;
+  width: 250px;
+  }
+  
+  .card:hover {
+    transform: scale(1.05);
+  }
+  
+  .img {
+    max-width: 100%;
+    border-radius: 5px; 
+  }
+  
+  .name {
+    font-size: 1.5rem;
+    margin: 10px 0;
+  }
+  
+  .teams {
+    font-size: 1rem;
+    color: #666;
+  }

@@ -1,3 +1,4 @@
+import SearchBar from '../SearchBar/SearchBar'
 import style from './Navbar.module.css'
 import {Link} from "react-router-dom"
 
@@ -11,11 +12,9 @@ const Navbar = () => {
             <Link to={"/home"}>Home</Link>
             <Link to={"/form"}>Formulario</Link>
         </div>
-        <div className={style.navbar_link_cont}>
-            <input type="text" placeholder='Search' />
-            <button>Search</button>
+        <SearchBar/>
         </div>
-    </div>
+   
   )
 }
 

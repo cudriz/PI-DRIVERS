@@ -6,6 +6,10 @@ const { Op } = require("sequelize");
 
 const infoCleaner = (array) => {
   return array.map((element) => {
+    const teams = Array.isArray(element.teams)
+      ? element.teams.join(", ") 
+      : element.teams; 
+
     return {
       id: element.id,
       name: element.name.forename,
@@ -14,7 +18,7 @@ const infoCleaner = (array) => {
       image: element.image.url,
       nationality: element.nationality,
       dob: element.dob,
-      teams: element.teams,
+      teams: teams, 
       created: false,
     };
   });
@@ -61,11 +65,24 @@ const getAllDrivers = async () => {
       },
     },
   });
+  const driverEstrucuturado = driversDB.map((driver)=>{
+    return {
+      id: driver.ID,
+      name: driver.name,
+      surname: driver.surname,
+      description: driver.description,
+      image: driver.image,
+      nationality: driver.nationality,
+      dob: driver.dob,
+      teams: driver.Teams.map((team) => team.name).flat()
+    }
+  })
+
   const infoApi = (await axios.get(`${URL}`)).data;
 
   const driversApi = infoCleaner(infoApi);
 
-  return [...driversDB, ...driversApi];
+  return [...driverEstrucuturado, ...driversApi];
 };
 
 const getIdPokemon = async (id, source) => {
@@ -75,7 +92,7 @@ const getIdPokemon = async (id, source) => {
     source === "api"
       ? (await axios.get(`${URL}/${id}`)).data
       : await Driver.findByPk(id, {
-        include: [Team],  
+        include: Team,  
       });
   return driver;
 };
@@ -101,22 +118,14 @@ const createDriverDB = async (
   teams.forEach(async (teams) => {
     let teamsDb = await Team.findAll({
       where: {
-        name: [teams],
+        name: teams,
       },
     });
     await newDriver.addTeams(teamsDb);
-  });
-
-  const team = await Team.findAll({
-    where: {
-      name: teams,
-    },
-  });
-
-  await newDriver.addTeams(team);
-  
+  });  
   return newDriver;
 };
+
 
 module.exports = {
   getDriverByName,
