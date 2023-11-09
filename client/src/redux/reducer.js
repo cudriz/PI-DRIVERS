@@ -8,6 +8,7 @@ import {
   ORDER_BY_BIRTH_YEAR,
   GET_BY_ID,
   POST_DRIVER,
+  FILTER_ORIGIN,
 } from "./actions";
 
 const initialState = {
@@ -19,6 +20,7 @@ const initialState = {
   filter: true,
   selectedTeam: "",
   driverDetail: [],
+  loadingState: true
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -123,6 +125,29 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         drivers: filteredDriversByYear.slice(0, ITEMS_PER_PAGE),
         currentPage: 0,
+      };
+    case FILTER_ORIGIN:
+      let filterorigin;
+
+      if (action.payload === "All") {
+        filterorigin = state.driversBackup;
+      }
+
+      if (action.payload === "Local") {
+        filterorigin = state.driversBackup.filter(
+          (drivers) => typeof drivers.id === "string"
+        );
+      }
+
+      if (action.payload === "Api") {
+        filterorigin = state.driversBackup.filter(
+          (drivers) => typeof drivers.id === "number"
+        );
+      }
+      return {
+        ...state,
+        drivers: filterorigin,
+        loadingState: false,
       };
 
     default:

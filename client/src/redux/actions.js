@@ -9,6 +9,7 @@ export const FILTER_DRIVERS_BY_TEAM = "FILTER_DRIVERS_BY_TEAM";
 export const ORDER_BY_BIRTH_YEAR = "ORDER_BY_BIRTH_YEAR"
 export const GET_BY_ID = 'GET_BY_ID';
 export const POST_DRIVER = "POST_DRIVER"
+export const FILTER_ORIGIN = "FILTER_ORIGIN"
 
 export const getDrivers = () =>{
     return async function (dispatch) {
@@ -116,6 +117,12 @@ export const orderDriversAction = (order) => {
     return [...new Set(birthYears)];
   };
 
+  export const filterOrigin = (status) => {
+    return {
+      type: FILTER_ORIGIN,
+      payload: status,
+    };
+  };
 
   export const postDriver = (state) => {
     return async function (dispatch) {

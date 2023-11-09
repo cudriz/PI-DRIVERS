@@ -8,6 +8,7 @@ import {
   paginatedrivers,
   orderByBirthYear,
   getUniqueBirthYears,
+  filterOrigin,
 } from "../../redux/actions";
 import Cards from "../../components/Cards/Cards";
 import style from "./Home.module.css"
@@ -44,6 +45,12 @@ const Home = () => {
     setSelectedBirthYear(year);
     dispatch(orderByBirthYear(year));
   };
+  const handleFilterOrigin = (event) => {
+dispatch(filterOrigin(event.target.value))
+  }
+    
+
+ 
 
   return (
     <div className={style.container}>
@@ -79,6 +86,16 @@ const Home = () => {
           </select>
         </div>
         </div>
+        <div>Origin
+        <select onChange={(e) => handleFilterOrigin(e)}>
+            {["All", "Api", "Local"].map((e, i) => (
+              <option value={e} key={i}>
+                {e}
+              </option>
+            ))}
+          </select>
+
+           </div>
         <div className={style.pagination}>
           <h4>Paginado</h4>
           <button className={style.page}onClick={paginate} name="prev">
