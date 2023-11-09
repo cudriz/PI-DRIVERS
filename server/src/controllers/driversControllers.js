@@ -3,12 +3,11 @@ const URL = "http://localhost:5000/drivers";
 const { Driver, Team } = require("../db");
 const { Op } = require("sequelize");
 
-
 const infoCleaner = (array) => {
   return array.map((element) => {
     const teams = Array.isArray(element.teams)
-      ? element.teams.join(", ") 
-      : element.teams; 
+      ? element.teams.join(", ")
+      : element.teams;
 
     return {
       id: element.id,
@@ -18,7 +17,7 @@ const infoCleaner = (array) => {
       image: element.image.url,
       nationality: element.nationality,
       dob: element.dob,
-      teams: teams, 
+      teams: teams,
       created: false,
     };
   });
@@ -65,18 +64,18 @@ const getAllDrivers = async () => {
       },
     },
   });
-  const driverEstrucuturado = driversDB.map((driver)=>{
+  const driverEstrucuturado = driversDB.map((driver) => {
     return {
       id: driver.ID,
       name: driver.name,
       surname: driver.surname,
       description: driver.description,
-      image: driver.image,
+      image: driver.image.url,
       nationality: driver.nationality,
       dob: driver.dob,
-      teams: driver.Teams.map((team) => team.name).flat()
-    }
-  })
+      teams: driver.Teams.map((team) => team.name).flat(),
+    };
+  });
 
   const infoApi = (await axios.get(`${URL}`)).data;
 
@@ -92,9 +91,39 @@ const getIdPokemon = async (id, source) => {
     source === "api"
       ? (await axios.get(`${URL}/${id}`)).data
       : await Driver.findByPk(id, {
-        include: Team,  
-      });
-  return driver;
+          include: Team,
+        });
+  // if (source === "dbb") {
+  //   return driver;
+  // } else {
+  //   return {
+  //     id: driver.id,
+  //     name: driver.name.forename,
+  //     surname: driver.name.surname,
+  //     description: driver.description,
+  //     image: driver.image.url,
+  //     nationality: driver.nationality,
+  //     dob: driver.dob,
+  //     teams: driver.teams,
+  //   };
+  // }
+  // const fields = ["id", "name", "surname", "description", "image", "nationality", "dob", "teams"];
+
+  // return fields.map((field) => {
+  //   return driver[field];
+  // });
+  const formattedDriver = {
+    id: source === "api" ? driver.id : driver.ID,
+    name: source === "api" ? driver.name.forename : driver.name,  
+    surname: source === "api" ? driver.name.surname : driver.surname, 
+    description: driver.description,
+    image: source === "api" ? driver.image.url: driver.image,
+    nationality: driver.nationality,
+    dob: driver.dob,
+    teams: source === "api" ? driver.teams : driver.Teams.map((team) => team.name).flat(),
+  };
+  return formattedDriver;
+
 };
 
 const createDriverDB = async (
@@ -122,10 +151,9 @@ const createDriverDB = async (
       },
     });
     await newDriver.addTeams(teamsDb);
-  });  
+  });
   return newDriver;
 };
-
 
 module.exports = {
   getDriverByName,

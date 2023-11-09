@@ -4,7 +4,13 @@ const defaultImageUrl =
   "https://s40320.pcdn.co/wp-content/uploads/2023/04/Max-Verstappen2.jpg";
 
 const Card = ({ id, name, image, teams }) => {
-  const teamsArray = typeof teams === "string" ? teams.split(", ") : [];
+  const teamsArray = [];
+
+  if (typeof teams === "string") {
+    teams.split(", ").forEach((team) => teamsArray.push(team.trim()));
+  } else if (teams instanceof Array) {
+    teams.forEach((team) => teamsArray.push(team));
+  }
 
   const imageUrl = image || defaultImageUrl;
   return (

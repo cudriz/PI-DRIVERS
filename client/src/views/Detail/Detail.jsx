@@ -8,26 +8,12 @@ import { getByID } from "../../redux/actions";
 const Detail = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  // const driver = useSelector((state) =>
-  //   state.drivers.find((d) => d.id === parseInt(id))
-  // );
-  const driverId = useSelector(state => state.drivers.fin((d)=>d.id === parseInt(id)))
 
-  // useEffect(() => {
-  //   dispatch(getDrivers());
-  // }, [dispatch]);
+  const driverId = useSelector(state => state.driverDetail)
 
   useEffect(()=>{
     dispatch(getByID(id))
-  }, [dispatch, id])
-
-
-    // Verifica si driverId está definido y no es un objeto vacío antes de acceder a sus propiedades
-    if (!driverId || Object.keys(driverId).length === 0) {
-      return <div>Cargando...</div>;
-    }
-
-
+  }, [dispatch])
 
 
   return (

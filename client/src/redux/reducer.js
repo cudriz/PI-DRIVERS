@@ -6,7 +6,8 @@ import {
   GET_TEAMS_DRIVERS,
   FILTER_DRIVERS_BY_TEAM,
   ORDER_BY_BIRTH_YEAR,
-  GET_BY_ID
+  GET_BY_ID,
+  POST_DRIVER,
 } from "./actions";
 
 const initialState = {
@@ -17,7 +18,7 @@ const initialState = {
   driversFilter: [],
   filter: true,
   selectedTeam: "",
-  driverId: []
+  driverDetail: [],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -35,12 +36,16 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         allTeams: action.payload,
       };
-      case GET_BY_ID:
-        return {
-          ...state,
-          driverId: action.payload,
-        }
-
+    case GET_BY_ID:
+      return {
+        ...state,
+        driverDetail: action.payload,
+      };
+    case POST_DRIVER:
+      return {
+        ...state,
+        drivers: [...state.drivers, action.payload],
+      };
     case PAGINATE:
       const next_page = state.currentPage + 1;
       const prev_page = state.currentPage - 1;
@@ -108,18 +113,17 @@ const rootReducer = (state = initialState, action) => {
         currentPage: 0,
         selectedTeam,
       };
-      case ORDER_BY_BIRTH_YEAR:
-        const selectedYear = action.payload;
-        const filteredDriversByYear = state.driversBackup.filter(
-          (driver) => driver.dob.split("-")[0] === selectedYear
-        );
-      
-        return {
-          ...state,
-          drivers: filteredDriversByYear.slice(0, ITEMS_PER_PAGE),
-          currentPage: 0,
-        };
-      
+    case ORDER_BY_BIRTH_YEAR:
+      const selectedYear = action.payload;
+      const filteredDriversByYear = state.driversBackup.filter(
+        (driver) => driver.dob.split("-")[0] === selectedYear
+      );
+
+      return {
+        ...state,
+        drivers: filteredDriversByYear.slice(0, ITEMS_PER_PAGE),
+        currentPage: 0,
+      };
 
     default:
       return { ...state };

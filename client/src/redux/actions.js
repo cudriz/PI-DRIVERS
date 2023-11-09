@@ -8,6 +8,7 @@ export const GET_TEAMS_DRIVERS = "GET_TEAMS_DRIVERS"
 export const FILTER_DRIVERS_BY_TEAM = "FILTER_DRIVERS_BY_TEAM";
 export const ORDER_BY_BIRTH_YEAR = "ORDER_BY_BIRTH_YEAR"
 export const GET_BY_ID = 'GET_BY_ID';
+export const POST_DRIVER = "POST_DRIVER"
 
 export const getDrivers = () =>{
     return async function (dispatch) {
@@ -113,4 +114,23 @@ export const orderDriversAction = (order) => {
   export const getUniqueBirthYears = (drivers) => {
     const birthYears = drivers.map((driver) => driver.dob.split('-')[0]);
     return [...new Set(birthYears)];
+  };
+
+
+  export const postDriver = (state) => {
+    return async function (dispatch) {
+      try {
+        const response = await axios.post(
+          "http://localhost:3001/drivers/",
+          state
+        );
+        dispatch({
+          type: POST_DRIVER,
+          payload: response.data,
+        });
+        return response.data
+      } catch (error) {
+        console.log(error);
+      }  
+    }
   };
